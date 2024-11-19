@@ -1,5 +1,6 @@
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
+import { ApolloProviderWrapper } from '../components/apollo-provider-wrapper'
 import '../styles/globals.css'
 
 export default function App({
@@ -8,7 +9,9 @@ export default function App({
 }: AppProps) {
   return (
     <SessionProvider session={session}>
-      <Component {...pageProps} />
+      <ApolloProviderWrapper>
+        <Component {...pageProps} />
+      </ApolloProviderWrapper>
     </SessionProvider>
   )
 }

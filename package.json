@@ -9,12 +9,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.10",
+    "grafbase": "^0.80.4",
+    "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "15.0.2",
     "next-auth": "^4.24.10",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-intersection-observer": "^9.13.1"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

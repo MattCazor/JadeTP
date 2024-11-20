@@ -18,3 +18,15 @@
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+.flex {
+  display: flex;
+}
+
+.horizontal {
+  flex-direction: row;
+}
+
+.vertical {
+  flex-direction: column;
+}

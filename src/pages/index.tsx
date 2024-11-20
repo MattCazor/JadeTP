@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react"
+import { supabase } from "../lib/initSupabase";
 
 export default function Home() {
   const router = useRouter();
@@ -8,12 +9,12 @@ export default function Home() {
     handleOnPageLoad();
   }, []);
 
-  const handleOnPageLoad = () => {
+  const handleOnPageLoad = async () => {
     // chekc if user is logged in
-    const jwt = localStorage.getItem('jwt');
+    const jwt = localStorage.getItem('userId');
     if (jwt) {
-      // TO DO
-      // check first jwt is still valid
+      const data = await supabase.auth.getUser();
+      console.log(data);
     } else {
       // redirect to login
       router.push('/login');

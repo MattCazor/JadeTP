@@ -32,7 +32,9 @@
     "**/*.ts",
     "**/*.tsx",
     "next-env.d.ts",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/lib/middleware.js",
+    "src/pages/supabaseProvider.js"
   ],
   "exclude": [
     "node_modules"

@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
+    "@emotion/cache": "^11.13.5",
+    "@mui/material-nextjs": "^6.1.7",
+    "@picocss/pico": "^2.0.6",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/supabase-js": "^2.46.1",
     "grafbase": "^0.80.4",
     "graphql": "^16.9.0",
     "jsonwebtoken": "^9.0.2",

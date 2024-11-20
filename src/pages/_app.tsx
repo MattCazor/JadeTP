@@ -1,17 +1,17 @@
-import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
-import { ApolloProviderWrapper } from '../components/apollo-provider-wrapper'
 import '../styles/globals.css'
+import '../styles/globalicon.css';
+import { SupabaseProvider } from './supabaseProvider';
+import '@picocss/pico'
 
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
 }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <ApolloProviderWrapper>
-        <Component {...pageProps} />
-      </ApolloProviderWrapper>
-    </SessionProvider>
+    // supabase provider used to share the client among the whole app
+    <SupabaseProvider>
+      <Component {...pageProps} />
+    </SupabaseProvider>
   )
 }

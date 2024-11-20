@@ -1,14 +1,28 @@
 'use client'
 
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useSupabase } from './supabaseProvider'
 
 export default function Login() {
+    const { supabase } = useSupabase();
+    useEffect(() => {
+        handleUserAlreadySignedIn();
+        console.log("here");
+    }, []);
+
+    const handleUserAlreadySignedIn = async () => {
+        // check if user is already logged in and redirect to home page
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (user != null) {
+            router.push('/');
+        }
+    };
+
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const router = useRouter()
-    const supabase = createClientComponentClient()
 
     const handleSignUp = async () => {
         await supabase.auth.signUp({

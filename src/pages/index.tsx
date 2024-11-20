@@ -1,9 +1,10 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react"
-import { supabase } from "../lib/initSupabase";
+import { useSupabase } from "./supabaseProvider";
 
 export default function Home() {
   const router = useRouter();
+  const { supabase } = useSupabase();
 
   useEffect(() => {
     handleOnPageLoad();
@@ -11,11 +12,8 @@ export default function Home() {
 
   const handleOnPageLoad = async () => {
     // chekc if user is logged in
-    const jwt = localStorage.getItem('userId');
-    if (jwt) {
-      const data = await supabase.auth.getUser();
-      console.log(data);
-    } else {
+    const { data: { user }, error } = await supabase.auth.getUser();
+    if (user == null) {
       // redirect to login
       router.push('/login');
     }

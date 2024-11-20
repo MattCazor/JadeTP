@@ -1,9 +1,11 @@
 import React from 'react';
 import './index.css';
-import { supabase } from '../../lib/initSupabase';
+import { useRouter } from 'next/router';
+import { useSupabase } from '../supabaseProvider';
 
 export default function Register() {
-
+    const router = useRouter();
+    const { supabase } = useSupabase();
     const onSubmitRegister = async (e: React.FormEvent) => {
         e.preventDefault(); // Prevent the browser from reloading the page
 
@@ -25,8 +27,8 @@ export default function Register() {
             password: password,
             options: {
                 data: {
-                    firstName: firstName,
-                    lastName: lastName
+                    first_name: firstName,
+                    last_name: lastName
                 }
             }
         });
@@ -35,10 +37,8 @@ export default function Register() {
         if (error) {
             alert(error.message);
         } else {
-            // the user has been created, continue
-            const userId = data.user?.id;
-            localStorage.setItem('userId', userId as string);
-
+            // the user is logged in, go back to home page
+            router.push('/');
         }
     };
 

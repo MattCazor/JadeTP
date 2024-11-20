@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.11.10",
+    "@supabase/supabase-js": "^2.46.1",
     "grafbase": "^0.80.4",
     "graphql": "^16.9.0",
     "jsonwebtoken": "^9.0.2",

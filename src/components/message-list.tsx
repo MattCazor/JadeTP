@@ -1,4 +1,4 @@
-import { gql, useQuery } from '@apollo/client'
+/* import { gql, useQuery } from '@apollo/client'
 CopyCopyimport { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
@@ -60,4 +60,4 @@ export const MessageList = () => {
     </div>
   )
 }
-}
+} */

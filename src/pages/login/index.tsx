@@ -3,8 +3,9 @@
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useSupabase } from '../supabaseProvider'
-import './index.css'
+import styles from './index.module.css';
 import { ErrorMessage } from '@/components/misc/error-message'
+import Link from 'next/link'
 
 export default function Login() {
     const { supabase, appName } = useSupabase();
@@ -17,7 +18,7 @@ export default function Login() {
     const handleUserAlreadySignedIn = async () => {
         // check if user is already logged in and redirect to home page
         const { data: { user }, error } = await supabase.auth.getUser();
-        if (user != null) {
+        if (user != null && error == null) {
             router.push('/');
         }
     };
@@ -39,13 +40,13 @@ export default function Login() {
     }
 
     return (
-        <div className='main_wrapper'>
+        <div className={styles.main_wrapper}>
             <h1>{appName}</h1>
-            <div className='form_wrapper'>
-                <div className="field">
-                    <input name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} className='input' />
+            <div className={styles.form_wrapper}>
+                <div className={styles.field}>
+                    <input name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} className={styles.input} />
                 </div>
-                <div className="field">
+                <div className={styles.field}>
                     <input
                         type="password"
                         name="password"
@@ -60,7 +61,7 @@ export default function Login() {
 
                 <button onClick={handleSignIn}>Se connecter</button>
             </div>
-            <p>Pas encore de compte ? <a href='/register'>Créer un compte</a></p>
+            <p>Pas encore de compte ? <Link href='/register'>Créer un compte</Link></p>
         </div>
     )
 }

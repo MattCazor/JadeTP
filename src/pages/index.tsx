@@ -16,7 +16,7 @@ export default function Home() {
   const handleOnPageLoad = async () => {
     // chekc if user is logged in
     const { data: { user }, error } = await supabase.auth.getUser();
-    if (user == null) {
+    if (user == null || error) {
       // redirect to login
       router.push('/login');
     }

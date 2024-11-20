@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+/* import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 
 export type Message = {
@@ -49,4 +49,4 @@ export const Message = ({ message }: Props) => {
       </span>
     </div>
   )
-}
+} */

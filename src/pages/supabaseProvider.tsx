@@ -11,7 +11,7 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 );
 
-export const SupabaseProvider = ({ children }: any) => {
+export const SupabaseProvider = ({ children }: { children: React.ReactNode }) => {
 
     const contextValues = useMemo(() => ({
         supabase: supabase,
@@ -32,3 +32,5 @@ export const useSupabase = () => {
     }
     return context;
 };
+
+export default SupabaseProvider;

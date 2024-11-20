@@ -1,4 +1,4 @@
-import './error-message.css';
+import styles from './error-message.module.css'
 
 type ErrorMessageProps = {
     message: string;
@@ -6,7 +6,7 @@ type ErrorMessageProps = {
 
 export const ErrorMessage = ({ message }: ErrorMessageProps) => {
     return (
-        <div className="error_msg">
+        <div className={styles.error_msg}>
             <span className="material-symbols-outlined">warning</span>
             {message}
         </div>

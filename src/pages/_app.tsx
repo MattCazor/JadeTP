@@ -6,7 +6,7 @@ import '@picocss/pico'
 
 export default function App({
   Component,
-  pageProps: { session, ...pageProps },
+  pageProps: { ...pageProps },
 }: AppProps) {
   return (
     // supabase provider used to share the client among the whole app

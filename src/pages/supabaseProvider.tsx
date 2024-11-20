@@ -2,7 +2,8 @@ import React, { createContext, useContext, useMemo } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const SupabaseContext = createContext({
-    supabase: null as unknown as SupabaseClient
+    supabase: null as unknown as SupabaseClient,
+    appName: ""
 });
 
 const supabase = createClient(
@@ -13,7 +14,8 @@ const supabase = createClient(
 export const SupabaseProvider = ({ children }: any) => {
 
     const contextValues = useMemo(() => ({
-        supabase
+        supabase: supabase,
+        appName: "JadeTP"
     }), []);
 
     return (

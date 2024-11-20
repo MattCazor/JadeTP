@@ -1,25 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 import { useRouter } from 'next/router';
 import { useSupabase } from '../supabaseProvider';
+import { ErrorMessage } from '@/components/misc/error-message';
 
 export default function Register() {
     const router = useRouter();
-    const { supabase } = useSupabase();
-    const onSubmitRegister = async (e: React.FormEvent) => {
-        e.preventDefault(); // Prevent the browser from reloading the page
+    const { supabase, appName } = useSupabase();
 
-        const target = e.target as typeof e.target & {
-            firstName: { value: string };
-            lastName: { value: string };
-            email: { value: string };
-            password: { value: string };
-        };
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [error, setError] = useState('');
 
-        const firstName = target.firstName.value;
-        const lastName = target.lastName.value;
-        const email = target.email.value;
-        const password = target.password.value;
+
+    useEffect(() => {
+        handleUserAlreadySignedIn();
+    }, []);
+
+    const handleUserAlreadySignedIn = async () => {
+        // check if user is already logged in and redirect to home page
+        const { data: { user }, error } = await supabase.auth.getUser();
+        if (user != null) {
+            router.push('/');
+        }
+    };
+
+    const handleSignUp = async () => {
+
 
         // try to create a new user
         const { data, error } = await supabase.auth.signUp({
@@ -33,31 +42,45 @@ export default function Register() {
             }
         });
 
-        // check if there is an error
-        if (error) {
-            alert(error.message);
-        } else {
-            // the user is logged in, go back to home page
+        if (data.user && data.user.identities && data.user.identities.length == 0) {
+            // the user already exists (but incorrect password entered)
+            setError('Un utilisateur avec cet email existe déjà');
+            return;
+        } else if (error) {
+            setError(error.message);
+            return;
+        }
+
+        // if the user is created successfully, redirect to home page
+        if (data) {
             router.push('/');
         }
     };
 
     return (
-        <form onSubmit={onSubmitRegister}>
-            <label htmlFor="firstName">Prénom</label>
-            <input type="text" placeholder='Prénom' name="firstName" />
+        <div className='main_wrapper'>
+            <h1>{appName}</h1>
+            <div className='form_wrapper'>
+                <div className='field'>
+                    <input type="text" placeholder='Prénom' name="firstName" onChange={(e) => setFirstName(e.target.value)} />
+                </div>
+                <div className='field'>
+                    <input type="text" placeholder='Nom' name="lastName" onChange={(e) => setLastName(e.target.value)} />
+                </div>
+                <div className='field'>
+                    <input type="email" placeholder='Email' name="email" onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className='field'>
+                    <input type="password" placeholder='Mot de passe' name="password" onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                {error && (
+                    <ErrorMessage message={error} />
+                )}
+                <button onClick={handleSignUp}>S'inscrire</button>
 
-            <label htmlFor="lastName">Nom</label>
-            <input type="text" placeholder='Nom' name="lastName" />
+            </div>
+            <p>Déjà un compte ? <a href='/login'>Se connecter</a></p>
 
-            <label htmlFor="email">Email</label>
-            <input type="email" placeholder='Email' name="email" />
-
-            <label htmlFor="password">Mot de passe</label>
-            <input type="password" placeholder='Mot de passe' name="password" />
-
-            <button type="submit">S'inscrire</button>
-
-        </form>
+        </div>
     )
 }

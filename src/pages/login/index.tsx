@@ -43,23 +43,20 @@ export default function Login() {
         <div className={styles.main_wrapper}>
             <h1>{appName}</h1>
             <div className={styles.form_wrapper}>
-                <div className={styles.field}>
-                    <input name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} className={styles.input} />
-                </div>
-                <div className={styles.field}>
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder='Password'
-                        onChange={(e) => setPassword(e.target.value)}
-                        value={password}
-                    />
-                </div>
+                <input name="email" placeholder='Email' onChange={(e) => setEmail(e.target.value)} value={email} className={styles.input} />
+                <input
+                    type="password"
+                    name="password"
+                    placeholder='Password'
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                    className={styles.input}
+                />
                 {error && (
                     <ErrorMessage message={error} />
                 )}
 
-                <button onClick={handleSignIn}>Se connecter</button>
+                <button onClick={handleSignIn} className={styles.input}>Se connecter</button>
             </div>
             <p>Pas encore de compte ? <Link href='/register'>Créer un compte</Link></p>
         </div>

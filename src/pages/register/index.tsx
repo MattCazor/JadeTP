@@ -62,22 +62,14 @@ export default function Register() {
         <div className={styles.main_wrapper}>
             <h1>{appName}</h1>
             <div className={styles.form_wrapper}>
-                <div className={styles.field}>
-                    <input type="text" placeholder='Prénom' name="firstName" onChange={(e) => setFirstName(e.target.value)} />
-                </div>
-                <div className={styles.field}>
-                    <input type="text" placeholder='Nom' name="lastName" onChange={(e) => setLastName(e.target.value)} />
-                </div>
-                <div className={styles.field}>
-                    <input type="email" placeholder='Email' name="email" onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                <div className={styles.field}>
-                    <input type="password" placeholder='Mot de passe' name="password" onChange={(e) => setPassword(e.target.value)} />
-                </div>
+                <input type="text" placeholder='Prénom' name="firstName" onChange={(e) => setFirstName(e.target.value)} className={styles.input} />
+                <input type="text" placeholder='Nom' name="lastName" onChange={(e) => setLastName(e.target.value)} className={styles.input} />
+                <input type="email" placeholder='Email' name="email" onChange={(e) => setEmail(e.target.value)} className={styles.input} />
+                <input type="password" placeholder='Mot de passe' name="password" onChange={(e) => setPassword(e.target.value)} className={styles.input} />
                 {error && (
                     <ErrorMessage message={error} />
                 )}
-                <button onClick={handleSignUp}>{'S\'inscrire'}</button>
+                <button onClick={handleSignUp} className={styles.input}>{'S\'inscrire'}</button>
 
             </div>
             <p>Déjà un compte ? <Link href='/login'>Se connecter</Link></p>

@@ -19,6 +19,7 @@ export default function Home() {
     if (user == null || error) {
       // redirect to login
       router.push('/login');
+      return;
     }
 
     // fetch profile from profiles table

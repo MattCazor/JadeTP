@@ -1,0 +1,7 @@
+.home_wrapper {
+    background-color: var(--theme-background);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex: 1;
+}

@@ -1,22 +1,5 @@
 @use "pico";
 
-/* :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
-
-/* body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-} */
 
 .flex {
   display: flex;
@@ -28,4 +11,9 @@
 
 .vertical {
   flex-direction: column;
+}
+
+:root {
+  --accent-blue: rgb(1, 114, 173);
+  --theme-background: rgb(245, 245, 245);
 }

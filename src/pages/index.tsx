@@ -2,11 +2,15 @@ import { useRouter } from "next/router";
 import { useEffect } from "react"
 import { useSupabase } from "./supabaseProvider";
 import User from "@/lib/users/user";
+import { HomeComponent } from "@/components/home/home";
 import { useState } from "react";
+import { LoadingScreen } from "@/components/misc/loading/loading-screen";
 
 export default function Home() {
   const router = useRouter();
   const { supabase } = useSupabase();
+
+  const [isLoading, setIsLoading] = useState(true); // loading state
 
   useEffect(() => {
     handleOnPageLoad();
@@ -31,21 +35,19 @@ export default function Home() {
       if (profiles) {
         const profile = profiles;
         setUser(new User(profile.id, profile.first_name, profile.last_name));
+      } else {
+        router.push('/login');
       }
     }
 
-
+    setIsLoading(false);
   };
 
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    router.push('/login');
-  };
 
-  return (
-    <div className="flex flex-col">
-      <h1 className="text-white">Hello {user?.getFullName()}</h1>
-      <button onClick={handleSignOut} >Se déconnecter</button>
-    </div>
+  return isLoading ? (
+    <LoadingScreen />
+  ) : (
+    <HomeComponent supabase={supabase} user={user!} />
   )
+
 }

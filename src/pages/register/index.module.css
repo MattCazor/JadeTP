@@ -5,20 +5,18 @@
     height: 100vh;
     flex-direction: column;
     gap: 30px;
+    padding: 0 20px;
 }
 
 .form_wrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
+    align-items: center;
 }
 
 .input {
-    min-width: 500px;
-}
-
-@media screen and (max-width: 768px) {
-    .input {
-        width: 100%;
-    }
+    width: min(100%, 500px);
+    max-width: min(100%, 500px);
 }

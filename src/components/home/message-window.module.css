@@ -1,0 +1,4 @@
+.message_window {
+    display: flex;
+    flex: 1;
+}

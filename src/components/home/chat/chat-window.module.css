@@ -1,0 +1,45 @@
+.chat_window {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.h1 {
+    --pico-typography-spacing-vertical: 0px;
+}
+
+
+.top_bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.icon_button {
+    cursor: pointer;
+    padding: 10px;
+}
+
+.messages {
+    padding-top: 5px;
+    display: flex;
+    flex: 1;
+    overflow-y: scroll;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.bottom_profile {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

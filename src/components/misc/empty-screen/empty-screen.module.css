@@ -1,0 +1,17 @@
+.empty_messages {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.empty_messages span {
+    font-size: 8rem;
+}
+
+.empty_messages div {
+    text-align: center;
+    font-size: clamp(1.125rem, 0.971rem + 0.493vw, 1.5625rem);
+}

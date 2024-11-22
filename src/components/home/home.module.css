@@ -16,5 +16,23 @@
 .chat_window_wrapper {
     display: flex;
     flex: 1;
-    ;
+}
+
+@media screen and (max-width: 1468px) {
+    .message_window_wrapper {
+        flex: 2;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .message_window_wrapper {
+        flex: 1;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .message_window_wrapper {
+        display: none;
+    }
 }

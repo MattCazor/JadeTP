@@ -1,4 +1,4 @@
-.chat_window {
+.message_window {
     display: flex;
     flex: 1;
     background-color: white;

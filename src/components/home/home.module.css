@@ -4,4 +4,17 @@
     height: 100vh;
     display: flex;
     flex: 1;
+    padding: 20px;
+    gap: 20px;
+}
+
+.message_window_wrapper {
+    display: flex;
+    flex: 3;
+}
+
+.chat_window_wrapper {
+    display: flex;
+    flex: 1;
+    ;
 }

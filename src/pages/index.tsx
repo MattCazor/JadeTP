@@ -47,7 +47,7 @@ export default function Home() {
   return isLoading ? (
     <LoadingScreen />
   ) : (
-    <HomeComponent supabase={supabase} user={user!} />
+    <HomeComponent user={user!} />
   )
 
 }

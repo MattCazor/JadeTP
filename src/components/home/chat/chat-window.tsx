@@ -16,14 +16,14 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
     const router = useRouter();
     const { supabase, setStatus } = useSupabase();
 
-    const sender = new User('123', 'John', 'Doe');
+    /* const sender = new User('123', 'John', 'Doe');
     const receiver = new User('123', 'Steve', 'Smith');
     const mockMessages = [
         new Message('id', sender, receiver, 'Hello', false, 'timestamp'),
         new Message('id', receiver, sender, 'Hi', true, 'timestamp'),
-    ]
+    ] */
 
-    const [messages, setMessages] = useState<Message[]>([]);
+    const [messages, _] = useState<Message[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 
     const handleSignOut = async () => {
@@ -38,7 +38,7 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
     return (
         <article className={styles.chat_window}>
             <div className={styles.top_bar}>
-                <h1>Messages</h1>
+                <h1 className={styles.h1}>Messages</h1>
                 <div className={styles.icon_button} onClick={handleNewMessage}>
                     <span className="material-symbols-outlined">edit_square</span>
                 </div>
@@ -49,7 +49,7 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
                     <EmptyScreen message='Commencez à discuter en envoyant un message' icon='communication' />
                 )}
                 {messages.length > 0 && (
-                    messages.map((message) => <ChatRow message={message} user={user} />)
+                    messages.map((message) => <ChatRow key={message.getId()} message={message} user={user} />)
                 )}
             </div>
             <div className='hSep' />

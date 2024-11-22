@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styles from './message-window.module.css';
 import EmptyScreen from '../misc/empty-screen/empty-screen';
 import { MessageWindowStatus, useSupabase } from '@/pages/supabaseProvider';

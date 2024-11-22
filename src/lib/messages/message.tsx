@@ -17,6 +17,10 @@ class Message {
         this.receiver = receiver;
     }
 
+    public getId(): string {
+        return this.id;
+    }
+
     public getReciever(): User {
         return this.receiver;
     }

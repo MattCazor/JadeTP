@@ -5,7 +5,7 @@ const SupabaseContext = createContext({
     supabase: null as unknown as SupabaseClient,
     appName: "",
     status: 0,
-    setStatus: (status: number) => { }
+    setStatus: (_: number) => { } // eslint-disable-line @typescript-eslint/no-unused-vars
 });
 
 const supabase = createClient(

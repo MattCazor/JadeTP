@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useMemo } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const SupabaseContext = createContext({
     supabase: null as unknown as SupabaseClient,
-    appName: ""
+    appName: "",
+    status: 0,
+    setStatus: (status: number) => { }
 });
 
 const supabase = createClient(
@@ -11,12 +13,23 @@ const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? ""
 );
 
+
+enum MessageWindowStatus {
+    NO_ACTION = 0, // nothing should be display (default)
+    NEW_MESSAGE = 1, // a new message is being composed
+    CONVERSATION = 2 // a conversation is being displayed
+}
+
 export const SupabaseProvider = ({ children }: { children: React.ReactNode }) => {
+
+    const [status, setStatus] = useState<MessageWindowStatus>(MessageWindowStatus.NO_ACTION);
 
     const contextValues = useMemo(() => ({
         supabase: supabase,
-        appName: "JadeTP"
-    }), []);
+        appName: "JadeTP",
+        status: status,
+        setStatus: setStatus
+    }), [status]);
 
     return (
         <SupabaseContext.Provider value={contextValues}>
@@ -34,3 +47,4 @@ export const useSupabase = () => {
 };
 
 export default SupabaseProvider;
+export { MessageWindowStatus };

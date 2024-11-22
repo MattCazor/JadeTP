@@ -1,0 +1,40 @@
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.row:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.row_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.row_flat {
+    display: flex;
+    gap: 15px;
+}
+
+
+.message {
+    color: rgba(100, 100, 100, 0.6);
+}
+
+.not_read {
+    font-weight: bold;
+    color: black;
+}
+
+.not_read_dot {
+    background-color: var(--accent-blue);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}

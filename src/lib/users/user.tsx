@@ -17,6 +17,10 @@ class User {
         return `${this.first_name.charAt(0)}${this.last_name.charAt(0)}`;
     }
 
+    public getId(): string {
+        return this.id;
+    }
+
 
 }
 

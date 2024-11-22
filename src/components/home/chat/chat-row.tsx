@@ -18,7 +18,7 @@ export const ChatRow = ({ message, user }: ChatRowProps) => {
         // this method returns the user with whom the current user is chatting with
         // if the last message was sent by the current user, then the reciever is the user to display, else the sender is the user to display
         if (message.getSender().getId() === user.getId()) {
-            return message.getReciever();
+            return message.getReciever()
         }
         return message.getSender();
 

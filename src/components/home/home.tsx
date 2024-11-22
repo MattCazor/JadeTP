@@ -1,7 +1,7 @@
 import styles from './home.module.css';
 import User from '@/lib/users/user';
 import ChatWindow from './chat/chat-window';
-import MessageWindow from './message-window';
+import MessageWindow from './message/message-window';
 
 type HomeProps = {
     user: User
@@ -15,7 +15,7 @@ export const HomeComponent = ({ user }: HomeProps) => {
                 <ChatWindow user={user} />
             </div>
             <div className={styles.message_window_wrapper}>
-                <MessageWindow />
+                <MessageWindow user={user} />
             </div>
         </div >
     )

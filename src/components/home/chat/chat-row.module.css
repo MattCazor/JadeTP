@@ -6,10 +6,16 @@
     border-radius: 10px;
 }
 
+.row_active {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
 .row:hover {
     background-color: rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
+
+
 
 .row_content {
     display: flex;

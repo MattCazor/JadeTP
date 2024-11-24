@@ -38,24 +38,57 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
             return;
         }
         if (data) {
-            let messages = [];
-            const otherUserIds: any[] = [];
-            for (let messageMap of data) {
-                if (!otherUserIds.includes(messageMap.sender.id)) {
-                    let sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
-                    let receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
-                    let message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
-                    messages.push(message);
-                    otherUserIds.push(messageMap.sender.id);
-                }
-            }
-            setMessages(messages);
+            setMessages(handleMessagesList(data));
         }
+
+        // stream upadates (messages switches to read)
+        supabase
+            .channel('schema-db-changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public',
+                },
+                (payload) => handleOnMessageUpdate(payload)
+            )
+            .subscribe()
     };
+
+    const handleOnMessageUpdate = async (payload: any) => {
+        // function called when there is a message update
+        setMessages((prevMessages) => {
+            let newMessages = prevMessages.map(message => {
+                if (message.getId() === payload.new.id) {
+                    return new Message(payload.new.id, message.getSender(), message.getReciever(), payload.new.message, payload.new.read, payload.new.created_at);
+                }
+                return message;
+            });
+
+            return newMessages;
+        });
+    };
+
+    const handleMessagesList = (data: any): Message[] => {
+        // this method takes into input all the messages and display them by selecting only the last in each conversation
+        let messages = [];
+        const otherUserIds: any[] = [];
+        for (let messageMap of data) {
+            if (!otherUserIds.includes(messageMap.sender.id)) {
+                let sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
+                let receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
+                let message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
+                messages.push(message);
+                otherUserIds.push(messageMap.sender.id);
+            }
+        }
+        console.log(messages);
+        return messages;
+    }
 
 
     const handleSignOut = async () => {
-        // to logout the super
+        // to logout the superbase
         await supabase.auth.signOut();
         router.push('/login');
     };

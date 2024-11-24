@@ -12,7 +12,7 @@ type ChatRowProps = {
 
 export const ChatRow = ({ message, user }: ChatRowProps) => {
 
-    const { setStatus } = useSupabase();
+    const { setStatus, supabase, selectedUser, setSelectedUser } = useSupabase();
 
     const getUserToDisplay = (): User => {
         // this method returns the user with whom the current user is chatting with
@@ -24,14 +24,17 @@ export const ChatRow = ({ message, user }: ChatRowProps) => {
 
     }
 
-    const handleMessageTouch = () => {
+    const handleMessageTouch = async () => {
         // run when the user touched a message
 
+        // set the message to read
+        const { error } = await supabase.from('messages').update({ read: true }).eq('id', message.getId());
+        setSelectedUser(getUserToDisplay());
         setStatus(MessageWindowStatus.CONVERSATION);
     }
 
     return (
-        <div className={styles.row} onClick={handleMessageTouch}>
+        <div className={`${styles.row} ${selectedUser?.getId() === getUserToDisplay().getId() ? styles.row_active : ''}`} onClick={handleMessageTouch}>
             <div className={styles.row_flat}>
                 <ProfilePicture initials={getUserToDisplay().getInitials()} />
                 <div className={styles.row_content}>

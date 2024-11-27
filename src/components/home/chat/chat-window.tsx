@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Message from '@/lib/messages/message';
 import ChatRow from './chat-row';
 import EmptyScreen from '@/components/misc/empty-screen/empty-screen';
+import { LoadingScreen } from '@/components/misc/loading/loading-screen';
 
 type ChatWindowProps = {
     user: User
@@ -17,7 +18,8 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
     const { supabase, setStatus, setSelectedUser } = useSupabase();
 
 
-    const [messages, setMessages] = useState<Message[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchMessages();
@@ -40,6 +42,7 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
         if (data) {
             setMessages(handleMessagesList(data));
         }
+        setIsLoading(false);
 
         // stream upadates (messages switches to read) or new messages
         supabase
@@ -112,12 +115,16 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
             </div>
             <div className='hSep' />
             <div className={styles.messages}>
-                {messages.length == 0 && (
+                {messages.length == 0 && isLoading && (
+                    <LoadingScreen />
+                )}
+                {messages.length == 0 && !isLoading && (
                     <EmptyScreen message='Commencez à discuter en envoyant un message' icon='communication' />
                 )}
                 {messages.length > 0 && (
                     messages.map((message) => <ChatRow key={message.getId()} message={message} user={user} />)
                 )}
+
             </div>
             <div className='hSep' />
             <div className={styles.bottom_profile}>

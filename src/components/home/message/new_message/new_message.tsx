@@ -40,7 +40,7 @@ export const NewMessage = ({ user }: NewMessageProps) => {
             return;
         }
         if (data) {
-            let users = data.map((userMap: any) => new User(userMap.id, userMap.first_name, userMap.last_name));
+            let users = data.map((userMap: any) => new User(userMap.id, userMap.first_name, userMap.last_name)); // eslint-disable-line @typescript-eslint/no-explicit-any
             // remove the current user from the list
             users = users.filter((u) => u.getId() !== user.getId());
 

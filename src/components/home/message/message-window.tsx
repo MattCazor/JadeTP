@@ -1,7 +1,6 @@
 import styles from './message-window.module.css';
 import EmptyScreen from '../../misc/empty-screen/empty-screen';
 import { MessageWindowStatus, useSupabase } from '@/pages/supabaseProvider';
-import { useEffect, useState } from 'react';
 import User from '@/lib/users/user';
 import NewMessage from './new_message/new_message';
 

@@ -50,7 +50,7 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
                     event: 'INSERT',
                     schema: 'public',
                 },
-                (_) => fetchMessages()
+                () => fetchMessages()
             )
             .on(
                 'postgres_changes',
@@ -62,29 +62,27 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
             .subscribe()
     };
 
-    const handleOnMessageUpdate = async (payload: any) => {
+    const handleOnMessageUpdate = async (payload: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
         // function called when there is a message update
         setMessages((prevMessages) => {
-            let newMessages = prevMessages.map(message => {
+            return prevMessages.map(message => {
                 if (message.getId() === payload.new.id) {
                     return new Message(payload.new.id, message.getSender(), message.getReciever(), payload.new.message, payload.new.read, payload.new.created_at);
                 }
                 return message;
             });
-
-            return newMessages;
         });
     };
 
-    const handleMessagesList = (data: any): Message[] => {
+    const handleMessagesList = (data: any): Message[] => { // eslint-disable-line @typescript-eslint/no-explicit-any
         // this method takes into input all the messages and display them by selecting only the last in each conversation
-        let messages = [];
-        const otherUserIds: any[] = [];
-        for (let messageMap of data) {
+        const messages = [];
+        const otherUserIds: string[] = [];
+        for (const messageMap of data) {
             if (!otherUserIds.includes(messageMap.sender.id)) {
-                let sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
-                let receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
-                let message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
+                const sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
+                const receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
+                const message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
                 messages.push(message);
                 otherUserIds.push(messageMap.sender.id);
             }

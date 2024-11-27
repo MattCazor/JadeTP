@@ -29,6 +29,7 @@ export default function Home() {
     // fetch profile from profiles table
     const { data: profiles, error: profilesError } = await supabase.from('profiles').select('*').eq('id', user.id).single();
     if (profilesError) {
+      console.log('error7');
       alert(profilesError.message);
       return;
     } else {

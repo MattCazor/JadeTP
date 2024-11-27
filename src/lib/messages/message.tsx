@@ -38,8 +38,7 @@ class Message {
     }
 
     public getCreatedAt(): string {
-        const date = new Date(this.timestamp);
-        return `${date.getHours()}:${date.getMinutes()}`;
+        return this.timestamp;
     }
 }
 

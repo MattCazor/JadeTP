@@ -99,7 +99,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                 return (
                     <div key={message.getId()} className={styles.message_wrapper}>
                         <div className={styles.message}>
-                            <div className={styles.message_text}>{message.getMessage()}</div>
+                            <div className={`${styles.message_text} darkSensibleText`}>{message.getMessage()}</div>
                             <div className={styles.timestamp}>{formatTimestamp(message.getCreatedAt())}</div>
                         </div>
                     </div>

@@ -111,7 +111,7 @@ export const NewMessage = ({ user }: NewMessageProps) => {
                 {userFounds.length > 0 && (<div className={styles.searchResults}>
                     {userFounds.map((user) => (
                         <div key={user.getId()} className={styles.searchResult} onClick={() => handleSelectReceiver(user)}>
-                            <div>{user.getFullName()}</div>
+                            <div className='darkSensibleText'>{user.getFullName()}</div>
                         </div>
                     ))}
                 </div>

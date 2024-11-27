@@ -20,14 +20,14 @@ export default function Home() {
   const handleOnPageLoad = async () => {
     // chekc if user is logged in
     const { data: { user }, error } = await supabase.auth.getUser();
-    if (user == null || error) {
+    if (user == null || error || user.id == null) {
       // redirect to login
       router.push('/login');
       return;
     }
 
     // fetch profile from profiles table
-    const { data: profiles, error: profilesError } = await supabase.from('profiles').select('*').limit(1).single();
+    const { data: profiles, error: profilesError } = await supabase.from('profiles').select('*').eq('id', user.id).single();
     if (profilesError) {
       alert(profilesError.message);
       return;

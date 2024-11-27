@@ -1,10 +1,15 @@
 import styles from './message-window.module.css';
-import EmptyScreen from '../misc/empty-screen/empty-screen';
+import EmptyScreen from '../../misc/empty-screen/empty-screen';
 import { MessageWindowStatus, useSupabase } from '@/pages/supabaseProvider';
+import User from '@/lib/users/user';
+import NewMessage from './new_message/new_message';
 
 
+type MessageWindowProps = {
+    user: User
+}
 
-export const MessageWindow = () => {
+export const MessageWindow = ({ user }: MessageWindowProps) => {
 
     const { status } = useSupabase();
 
@@ -13,11 +18,14 @@ export const MessageWindow = () => {
             case MessageWindowStatus.NO_ACTION:
                 return <EmptyScreen icon='comment' message='Sélectionnez une conversation pour la visualiser.' />;
             case MessageWindowStatus.NEW_MESSAGE:
-                return <>Écire un nouveau message</>
+                return <NewMessage user={user} />
             case MessageWindowStatus.CONVERSATION:
                 return <>Conversation</>
         }
     };
+
+
+
 
     return (
         <article className={styles.message_window}>

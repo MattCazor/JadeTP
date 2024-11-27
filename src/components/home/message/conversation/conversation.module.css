@@ -1,0 +1,61 @@
+.conversationWrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+    gap: 15px;
+
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.conversation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+    min-width: 0;
+}
+
+.sender_wrapper {
+    justify-content: end !important;
+}
+
+.message_wrapper {
+    display: flex;
+
+}
+
+.sender {
+    background-color: rgba(66, 115, 240) !important;
+    color: white !important;
+}
+
+.message {
+    min-width: 0;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+    max-width: fit-content;
+    background-color: rgba(240, 240, 240);
+    max-width: 70%;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.message_text {
+    min-width: 0;
+}
+
+.timestamp {
+    font-size: 0.8rem;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.timestamp sender {
+    color: white;
+}

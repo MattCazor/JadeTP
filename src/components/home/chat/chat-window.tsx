@@ -14,7 +14,7 @@ type ChatWindowProps = {
 
 export const ChatWindow = ({ user }: ChatWindowProps) => {
     const router = useRouter();
-    const { supabase, setStatus } = useSupabase();
+    const { supabase, setStatus, setSelectedUser } = useSupabase();
 
 
     const [messages, setMessages] = useState<Message[]>([]); // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -41,17 +41,24 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
             setMessages(handleMessagesList(data));
         }
 
-        // stream upadates (messages switches to read)
+        // stream upadates (messages switches to read) or new messages
         supabase
             .channel('schema-db-changes')
             .on(
                 'postgres_changes',
                 {
-                    event: 'UPDATE',
+                    event: 'INSERT',
                     schema: 'public',
                 },
-                (payload) => handleOnMessageUpdate(payload)
+                (_) => fetchMessages()
             )
+            .on(
+                'postgres_changes',
+                {
+                    event: 'UPDATE',
+                    schema: 'public'
+                },
+                (payload) => handleOnMessageUpdate(payload))
             .subscribe()
     };
 
@@ -82,7 +89,6 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
                 otherUserIds.push(messageMap.sender.id);
             }
         }
-        console.log(messages);
         return messages;
     }
 
@@ -94,6 +100,7 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
     };
 
     const handleNewMessage = async () => {
+        setSelectedUser(null);
         setStatus(MessageWindowStatus.NEW_MESSAGE);
     };
     return (

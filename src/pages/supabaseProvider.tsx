@@ -8,7 +8,7 @@ const SupabaseContext = createContext({
     status: 0,
     setStatus: (_: number) => { }, // eslint-disable-line @typescript-eslint/no-unused-vars
     selectedUser: null as unknown as User | null,
-    setSelectedUser: (_: User) => { } // eslint-disable-line @typescript-eslint/no-unused-vars
+    setSelectedUser: (_: User | null) => { } // eslint-disable-line @typescript-eslint/no-unused-vars
 });
 
 const supabase = createClient(

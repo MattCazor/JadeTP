@@ -20,17 +20,38 @@
 .row_content {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .row_flat {
     display: flex;
     gap: 15px;
+    flex: 1;
+    min-width: 0;
 }
 
-
-.message {
+.message,
+.time {
     color: rgba(100, 100, 100, 0.6);
 }
+
+.message {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.message_row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    min-width: 0;
+    gap: 10px;
+}
+
 
 .not_read {
     font-weight: bold;

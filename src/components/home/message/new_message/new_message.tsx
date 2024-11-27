@@ -89,8 +89,13 @@ export const NewMessage = ({ user }: NewMessageProps) => {
 
     }
 
+    const handleGoback = () => {
+        setStatus(MessageWindowStatus.NO_ACTION);
+    }
+
     return (
         <div className={styles.newMessage}>
+            <div className='goBack' onClick={handleGoback}><span className="material-symbols-outlined">arrow_back_ios</span></div>
             <h1>Nouveau message</h1>
             <div className={styles.inputSearch} >
                 <input

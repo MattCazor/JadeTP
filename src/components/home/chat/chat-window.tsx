@@ -79,12 +79,13 @@ export const ChatWindow = ({ user }: ChatWindowProps) => {
         const messages = [];
         const otherUserIds: string[] = [];
         for (const messageMap of data) {
-            if (!otherUserIds.includes(messageMap.sender.id)) {
+            const userToCheck = messageMap.sender.id === user.getId() ? messageMap.receiver.id : messageMap.sender.id;
+            if (!otherUserIds.includes(userToCheck)) {
                 const sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
                 const receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
                 const message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
                 messages.push(message);
-                otherUserIds.push(messageMap.sender.id);
+                otherUserIds.push(userToCheck);
             }
         }
         return messages;

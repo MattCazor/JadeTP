@@ -12,14 +12,14 @@ type HomeProps = {
 
 export const HomeComponent = ({ user }: HomeProps) => {
 
-    const { status, supabase } = useSupabase();
+    const { status, supabase, selectedUser } = useSupabase();
 
     const [messages, setMessages] = useState<Message[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         fetchMessages();
-    }, []);
+    }, [selectedUser]);
 
     const fetchMessages = async () => {
         const { data, error } = await supabase
@@ -32,11 +32,28 @@ export const HomeComponent = ({ user }: HomeProps) => {
             .or(`receiver.eq.${user.getId()},sender.eq.${user.getId()}`)
             .order('created_at', { ascending: false });
         if (error) {
+            console.log('error2');
             alert(error.message);
             return;
         }
         if (data) {
-            setMessages(handleMessagesList(data));
+            const newMessages: Message[] = handleMessagesList(data);
+            setMessages(newMessages);
+
+            // set the new message to read if the current user has the conversation open
+            if (selectedUser) {
+                // get the id of the last message sent by the selected user
+                const lastMessageId = newMessages.find((message) => message.getSender().getId() === selectedUser.getId())?.getId();
+                if (!lastMessageId) return;
+                const { error } = await supabase.from('messages').update({ read: true }).eq('id', lastMessageId);
+                if (error) {
+                    console.log('error3');
+                    alert(error.message);
+                    return;
+                }
+
+
+            }
         }
         setIsLoading(false);
 

@@ -1,7 +1,7 @@
 import ProfilePicture from "@/components/misc/profile-picture";
 import User from "@/lib/users/user";
 import styles from './conversation.module.css';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MessageWindowStatus, useSupabase } from "@/pages/supabaseProvider";
 import Message from "@/lib/messages/message";
 
@@ -15,8 +15,18 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
 
     const { setStatus, setSelectedUser, supabase, selectedUser } = useSupabase();
 
+    const containerRef = useRef(null);
+
     // the new message input value
     const [message, setMessage] = useState('');
+
+
+    useEffect(() => {
+        const element: any = containerRef.current; // eslint-disable-line @typescript-eslint/no-explicit-any
+        if (element) {
+            element.scrollTop = element.scrollHeight;
+        }
+    }, [messages]);
 
     const sendMessage = async () => {
         // get the message
@@ -34,6 +44,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
             }
         ]);
         if (error) {
+            console.log('error5');
             alert(error.message);
             return;
         }
@@ -105,7 +116,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                 {otherUser.getFullName()}
             </div>
             <div className="hSep" />
-            <div className={styles.conversation}>
+            <div className={styles.conversation} ref={containerRef}>
                 {buildConversation()}
             </div>
             <fieldset role="group">

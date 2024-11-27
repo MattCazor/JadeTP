@@ -36,6 +36,7 @@ export const NewMessage = ({ user }: NewMessageProps) => {
         // fetch 5 first users from the database
         const { data, error } = await supabase.from('profiles').select('*').ilike('first_name', `%${search}%`).limit(5);
         if (error) {
+            console.log('error1');
             alert(error.message);
             return;
         }
@@ -81,6 +82,7 @@ export const NewMessage = ({ user }: NewMessageProps) => {
             }
         ]);
         if (error) {
+            console.log('error6');
             alert(error.message);
             return;
         }

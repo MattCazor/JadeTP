@@ -30,6 +30,7 @@ export const ChatRow = ({ message, user }: ChatRowProps) => {
         // set the message to read
         const { error } = await supabase.from('messages').update({ read: true }).eq('id', message.getId());
         if (error) {
+            console.log('error4');
             alert(error.message);
             return;
         }

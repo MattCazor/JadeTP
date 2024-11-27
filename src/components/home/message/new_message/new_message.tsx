@@ -125,7 +125,18 @@ export const NewMessage = ({ user }: NewMessageProps) => {
                         {receiver.getFullName()}
                     </div>
                     <fieldset role="group">
-                        <input name="text" type="text" placeholder="Saisir un message..." value={message} onChange={(e) => setMessage(e.target.value)} />
+                        <input
+                            name="text"
+                            type="text"
+                            placeholder="Saisir un message..."
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    sendMessage();
+                                }
+                            }}
+                        />
                         <input type="submit" value="Envoyer" onClick={sendMessage} />
                     </fieldset>
                 </div>

@@ -35,7 +35,7 @@ export const SupabaseProvider = ({ children }: { children: React.ReactNode }) =>
         setStatus: setStatus,
         selectedUser: selectedUser,
         setSelectedUser: setSelectedUser
-    }), [status]);
+    }), [status, selectedUser]);
 
     return (
         <SupabaseContext.Provider value={contextValues}>

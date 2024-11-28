@@ -25,9 +25,7 @@
   cursor: pointer;
 }
 
-.darkSensibleText {
-  color: white;
-}
+
 
 @media screen and (min-width: 769px) {
   .goBack {

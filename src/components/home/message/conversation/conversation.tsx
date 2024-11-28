@@ -81,6 +81,16 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
     const leadingZero = (value: number): string => {
         return value < 10 ? `0${value}` : `${value}`;
     }
+
+    const shouldDisplayReadStatus = (message: Message): boolean => {
+        // this method returns true if the message is the last message sent by the current user
+        const messagesCopy = [...messages];
+        const lastMessage = messagesCopy.reverse().find((m) => m.getSender().getId() === user.getId());
+        if (!lastMessage) {
+            return false;
+        }
+        return lastMessage.getId() === message.getId();
+    }
     const buildConversation = (): React.ReactNode => {
         return (
             messages.map((message) => {
@@ -90,8 +100,12 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                         <div key={message.getId()} className={`${styles.message_wrapper} ${styles.sender_wrapper}`}>
                             <div className={`${styles.message} ${styles.sender}`}>
                                 <div>{message.getMessage()}</div>
-                                <div className={`${styles.timestamp} ${styles.sender}`}>{formatTimestamp(message.getCreatedAt())}</div>
+                                <div className={`${styles.timestamp} ${styles.sender}`}>
+                                    {formatTimestamp(message.getCreatedAt())}
+                                    {shouldDisplayReadStatus(message) && message.getHasBeenRead() && <><span className="material-symbols-outlined">done_all</span><span>Lu</span></>}
+                                </div>
                             </div>
+
                         </div>
                     )
                 }

@@ -32,6 +32,13 @@
 
 }
 
+.timestamp.sender {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
 .sender {
     background-color: rgba(66, 115, 240) !important;
     color: white !important;
@@ -56,8 +63,4 @@
 .timestamp {
     font-size: 0.8rem;
     color: rgba(0, 0, 0, 0.5);
-}
-
-.timestamp sender {
-    color: white;
 }

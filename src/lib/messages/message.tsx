@@ -40,7 +40,14 @@ class Message {
     }
 
     public getMessage(): string {
-        return this.message;
+        switch (this.msg_type) {
+            case MESSAGE_TYPE.TEXT:
+                return this.message;
+            case MESSAGE_TYPE.GIF:
+                return "GIF";
+            default:
+                return this.message;
+        }
     }
 
     public getHasBeenRead(): boolean {

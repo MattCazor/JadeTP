@@ -3,7 +3,7 @@ import User from "@/lib/users/user";
 import styles from './conversation.module.css';
 import { useEffect, useRef, useState } from "react";
 import { MessageWindowStatus, useSupabase } from "@/pages/supabaseProvider";
-import Message from "@/lib/messages/message";
+import Message, { MESSAGE_TYPE } from "@/lib/messages/message";
 
 type ConversationProps = {
     user: User // logged in user
@@ -92,6 +92,18 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
         return lastMessage.getId() === message.getId();
     }
     const buildConversation = (): React.ReactNode => {
+
+        const displayMessageAccordingToType = (message: Message): React.ReactNode => {
+            switch (message.getType()) {
+                case MESSAGE_TYPE.TEXT:
+                    return <div>{message.getMessage()}</div>
+                case MESSAGE_TYPE.GIF:
+                    return <img src={message.getGifUrl()} alt="gif" />
+                default:
+                    return <div>{message.getMessage()}</div>
+            }
+        }
+
         return (
             messages.map((message) => {
                 if (message.getSender().getId() === user.getId()) {
@@ -99,7 +111,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                     return (
                         <div key={message.getId()} className={`${styles.message_wrapper} ${styles.sender_wrapper}`}>
                             <div className={`${styles.message} ${styles.sender}`}>
-                                <div>{message.getMessage()}</div>
+                                {displayMessageAccordingToType(message)}
                                 <div className={`${styles.timestamp} ${styles.sender}`}>
                                     {formatTimestamp(message.getCreatedAt())}
                                     {shouldDisplayReadStatus(message) && message.getHasBeenRead() && <><span className="material-symbols-outlined">done_all</span><span>Lu</span></>}

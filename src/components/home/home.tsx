@@ -4,7 +4,7 @@ import ChatWindow from './chat/chat-window';
 import MessageWindow from './message/message-window';
 import { MessageWindowStatus, useSupabase } from '@/pages/supabaseProvider';
 import { useEffect, useState } from 'react';
-import Message from '@/lib/messages/message';
+import Message, { parse_msg_type } from '@/lib/messages/message';
 
 type HomeProps = {
     user: User
@@ -84,7 +84,8 @@ export const HomeComponent = ({ user }: HomeProps) => {
         for (const messageMap of data) {
             const sender = new User(messageMap.sender.id, messageMap.sender.first_name, messageMap.sender.last_name);
             const receiver = new User(messageMap.receiver.id, messageMap.receiver.first_name, messageMap.receiver.last_name);
-            const message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at);
+            const msg_type = parse_msg_type(messageMap.msg_type);
+            const message = new Message(messageMap.id, sender, receiver, messageMap.message, messageMap.read, messageMap.created_at, msg_type, messageMap.gif_url);
             messages.push(message);
         }
         return messages;
@@ -95,7 +96,7 @@ export const HomeComponent = ({ user }: HomeProps) => {
         setMessages((prevMessages) => {
             return prevMessages.map(message => {
                 if (message.getId() === payload.new.id) {
-                    return new Message(payload.new.id, message.getSender(), message.getReciever(), payload.new.message, payload.new.read, payload.new.created_at);
+                    return new Message(payload.new.id, message.getSender(), message.getReciever(), payload.new.message, payload.new.read, payload.new.created_at, parse_msg_type(payload.new.msg_type), payload.new.gif_url);
                 }
                 return message;
             });

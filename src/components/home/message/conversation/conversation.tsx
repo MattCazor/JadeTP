@@ -107,7 +107,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
         const displayMessageAccordingToType = (message: Message): React.ReactNode => {
             switch (message.getType()) {
                 case MESSAGE_TYPE.TEXT:
-                    return <div>{message.getMessage()}</div>
+                    return <div className={`${styles.message_text} ${message.getReciever().getId() === user.getId() ? 'darkSensibleText' : ''}`}>{message.getMessage()}</div>
                 case MESSAGE_TYPE.GIF:
                     return <img
                         src={message.getGifUrl()}
@@ -120,7 +120,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                             }
                         }} />
                 default:
-                    return <div>{message.getMessage()}</div>
+                    return <div className={`${styles.message_text} darkSensibleText`}>{message.getMessage()}</div>
             }
         }
 
@@ -145,7 +145,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                 return (
                     <div key={message.getId()} className={styles.message_wrapper}>
                         <div className={styles.message}>
-                            <div className={`${styles.message_text} darkSensibleText`}>{message.getMessage()}</div>
+                            {displayMessageAccordingToType(message)}
                             <div className={styles.timestamp}>{formatTimestamp(message.getCreatedAt())}</div>
                         </div>
                     </div>

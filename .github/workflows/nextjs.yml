@@ -43,6 +43,7 @@ jobs:
           touch .env
           echo NEXT_PUBLIC_SUPABASE_URL=${{ secrets.NEXT_PUBLIC_SUPABASE_URL }} >> .env
           echo NEXT_PUBLIC_SUPABASE_ANON_KEY=${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }} >> .env
+          echo TENOR_KEY=${{ secrets.TENOR_KEY || 'default_value' }} >> .env
       - name: Detect package manager
         id: detect-package-manager
         run: |

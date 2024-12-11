@@ -4,6 +4,7 @@ import styles from './conversation.module.css';
 import { useEffect, useRef, useState } from "react";
 import { MessageWindowStatus, useSupabase } from "@/pages/supabaseProvider";
 import Message, { MESSAGE_TYPE } from "@/lib/messages/message";
+import GifPicker from "./gif_picker/gif_picker";
 
 type ConversationProps = {
     user: User // logged in user
@@ -19,6 +20,8 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
 
     // the new message input value
     const [message, setMessage] = useState('');
+    // if the user wants to send a GIF
+    const [shouldOpenGifPicker, setShouldOpenGifPicker] = useState(false);
 
 
     useEffect(() => {
@@ -28,9 +31,14 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
         }
     }, [messages]);
 
-    const sendMessage = async () => {
+    const sendMessage = async (gif = false, content: string) => {
+        // this method send a message.
+        // if gif is true, the message is a gif
+        // if gif is false, the message is a text message
+        // content is either the text message or the gif url
+
         // get the message
-        if (message == '') {
+        if (content == '' && !gif) {
             alert('Veuillez saisir un message');
             return;
         }
@@ -39,8 +47,10 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
             {
                 receiver: selectedUser?.getId(),
                 sender: user.getId(),
-                message: message,
-                read: false
+                message: gif ? '' : content,
+                read: false,
+                msg_type: gif ? MESSAGE_TYPE.GIF : MESSAGE_TYPE.TEXT,
+                gif_url: gif ? content : null
             }
         ]);
         if (error) {
@@ -49,6 +59,7 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
             return;
         }
         setMessage('');
+        setShouldOpenGifPicker(false);
 
     }
 
@@ -154,12 +165,19 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                     onChange={(e) => setMessage(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === 'Enter') {
-                            sendMessage();
+                            sendMessage(false, message);
                         }
                     }}
                 />
-                <input type="submit" value="Envoyer" onClick={sendMessage} />
+                <input type="submit" value="Envoyer" onClick={() => sendMessage(false, message)} />
+                <div onClick={() => setShouldOpenGifPicker(true)} className={styles.gifWrapper} >
+                    <span className="material-symbols-outlined" style={{ fontSize: '50px' }}>gif_box</span>
+                </div>
             </fieldset>
+            {/* gif picker */}
+            <dialog open={shouldOpenGifPicker}>
+                <GifPicker setShouldOpenGifPicker={setShouldOpenGifPicker} sendGif={sendMessage} />
+            </dialog>
         </div >
     );
 };

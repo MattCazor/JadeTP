@@ -1,0 +1,27 @@
+.gif_picker {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    gap: 10px;
+    padding: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.gif_picker img {
+    max-width: 150px;
+    align-self: center;
+    cursor: pointer;
+}
+
+.gif_picker img:hover {
+    scale: 1.1;
+}
+
+.gif_picker img:not(:hover) {
+    scale: 0.9;
+}
+
+.selected {
+    border: 3px solid #007bff;
+    box-shadow: 0 0 10px #007bff;
+}

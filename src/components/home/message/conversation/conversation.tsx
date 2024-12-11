@@ -109,7 +109,16 @@ export const Conversation = ({ user, otherUser, messages }: ConversationProps) =
                 case MESSAGE_TYPE.TEXT:
                     return <div>{message.getMessage()}</div>
                 case MESSAGE_TYPE.GIF:
-                    return <img src={message.getGifUrl()} alt="gif" />
+                    return <img
+                        src={message.getGifUrl()}
+                        alt="gif"
+                        onLoad={() => {
+                            // re scroll to the bottom of the conversation
+                            const element: any = containerRef.current; // eslint-disable-line @typescript-eslint/no-explicit-any
+                            if (element) {
+                                element.scrollTop = element.scrollHeight;
+                            }
+                        }} />
                 default:
                     return <div>{message.getMessage()}</div>
             }
